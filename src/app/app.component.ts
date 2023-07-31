@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'quiz-app';
+    question = {
+      text: 'Who painted the MonaLisa',
+      choices: ['Vincent van Gogh', 'Pablo Picasso', 'Michelangelo', 'Leonardo Da Vinci']
+    };
+
+    onClickChoice(text: string){
+      console.log(text);
+    }
 }
