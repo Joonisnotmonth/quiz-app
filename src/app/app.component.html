@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html>
   <body>
+    <!--Show question-->
     <div class="main vertical-center">
-      <div class="container">
-        <h2>
-          Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}
-        </h2>
-        <h3 class="mb-3">{{ questions[currentQuestionIndex].text }}</h3>
-        <div class="row">
-          <div class="col text-center">
-            <img
-              *ngIf="questions[currentQuestionIndex].image"
-              [src]="questions[currentQuestionIndex].image"
-            />
+      <ng-template [ngIf]="!isEnd" [ngIfElse]="showScore">
+        <div class="container">
+          <h2>
+            Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}
+          </h2>
+          <h3 class="mb-3">{{ questions[currentQuestionIndex].text }}</h3>
+          <div class="row">
+            <div class="col text-center">
+              <img
+                *ngIf="questions[currentQuestionIndex].image"
+                [src]="questions[currentQuestionIndex].image"
+              />
+            </div>
+          </div>
+          <div class="row g-2 mt-3">
+            <div
+              class="col-xs-12 col-md-6 col-lg-3"
+              *ngFor="let choice of questions[currentQuestionIndex].choices"
+            >
+              <button class="btn btn-primary" (click)="onClickChoice(choice)">
+                {{ choice.text }}
+              </button>
+            </div>
           </div>
         </div>
-        <div class="row g-2 mt-3">
-          <div
-            class="col-xs-12 col-md-6 col-lg-3"
-            *ngFor="let choice of questions[currentQuestionIndex].choices"
-          >
-            <button class="btn btn-primary" (click)="onClickChoice(choice)">
-              {{ choice.text }}
-            </button>
+      </ng-template>
+
+      <!--Show Score-->
+      <ng-template #showScore>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center h2">Your Score : {{ score }}</div>
+            <div>
+              <button class="btn btn-success" (click)="onClickNewQuiz()">
+                New Quiz
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-template>
     </div>
   </body>
 </html>
