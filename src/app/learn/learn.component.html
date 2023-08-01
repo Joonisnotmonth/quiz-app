@@ -1,0 +1,93 @@
+<div class="main vertical-center">
+  <!--ตัวเลือกรูปแบบ-->
+  <div class="container" style="max-width: 800px">
+    <div class="row">
+      <div class="col text-center">
+        <div
+          class="btn-toolbar"
+          role="toolbar"
+          aria-label="Toolbar with button groups"
+        >
+          <div class="btn-group btn-group-s" role="group">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="onClickEach()"
+            >
+              Each Question
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="onClickList()"
+            >
+              Question List
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--กล่องเฉลยคำถาม 1-->
+  <ng-template [ngIf]="eachQuestion" [ngIfElse]="list">
+    <div class="container" style="max-width: 800px">
+      <!--Question Index-->
+      <h5 class="text-center">
+        {{ currentQuestionIndex + 1 }} of {{ questions.length }}
+      </h5>
+      <!--Question-->
+      <div class="row g-2 mt-1">
+        <div class="col h4">
+          <b>Q:</b>
+          {{ questions[currentQuestionIndex].text }}
+        </div>
+      </div>
+      <!--Correct Choice-->
+      <div class="row g-2 mt-1">
+        <div class="col h4">
+          <b>A:</b>
+          {{ answers[currentQuestionIndex] }}
+        </div>
+      </div>
+      <!--button>-->
+      <div class="row my-5">
+        <div class="col sm-6 g-2">
+          <button
+            class="btn btn-primary"
+            (click)="onClickPrevious()"
+            [disabled]="isStart"
+          >
+            Previous
+          </button>
+        </div>
+        <div class="col sm-6 g-2">
+          <button
+            class="btn btn-primary"
+            (click)="onClickNext()"
+            [disabled]="isEnd"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <!--กล่องเฉลยคำถาม 2-->
+  <ng-template #list>
+    <div class="container" style="max-width: 800px">
+      <div class="row">
+        <!--Question-->
+        <div class="row" *ngFor="let question of questions">
+          <div class="col-md-8">{{ question.text }}</div>
+          <div class="col-md-4" *ngIf="question.choices">
+            <ng-container *ngFor="let choice of question.choices">
+              <div *ngIf="choice.isAnswer">
+                👍<b>{{ choice.text }}</b>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
